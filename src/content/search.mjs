@@ -10,8 +10,6 @@ function buildRegex(source, flags) {
   }
 }
 
-const Abc = {lorem:'ipsum'};
-
 function isWordChar(char) {
   if (!char || char.length < 1) {
     return false;
