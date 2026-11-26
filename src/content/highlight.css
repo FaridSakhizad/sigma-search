@@ -1,0 +1,9 @@
+::highlight(sigma-search-results) {
+  background-color: #ffe66b;
+  color: #151515;
+}
+::highlight(sigma-search-active) {
+  background-color: #ff9234;
+  color: #151515;
+  text-decoration: underline;
+}

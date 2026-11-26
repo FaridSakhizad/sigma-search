@@ -1,50 +1,83 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="./style.css" />
-</head>
-<body>
-  <div class="popup">
-    <form class="searchForm">
-      <div class="row">
-        <input type="text" class="input searchForm-input _search-query-input" placeholder="Search..." />
-        <button type="submit" class="button searchForm-button _search-button">Go</button>
-        <button type="submit" class="button searchForm-button _clear-button">Clear</button>
-      </div>
-
-      <hr class="searchForm-hr" />
-
-      <div class="row">
-        <label class="checkboxControl">
-          <input class="checkbox checkboxControl-input _case-sensitive" type="checkbox" name="" />
-          <span class="checkboxControl-text">Case Sensitive</span>
-        </label>
-      </div>
-
-      <div class="row">
-        <label class="checkboxControl">
-          <input class="checkbox checkboxControl-input _whole-words"  type="checkbox" name="" />
-          <span class="checkboxControl-text">Whole Words</span>
-        </label>
-      </div>
-
-      <div class="row">
-        <label class="checkboxControl">
-          <input class="checkbox checkboxControl-input _use-regex"  type="checkbox" name="" />
-          <span class="checkboxControl-text">Regex</span>
-        </label>
-      </div>
-
-      <hr class="searchForm-hr" />
-
-      <div class="results _results-container" style="display: none">
-        <div class="results-title">Total Results: <span class="_current-result-index">1</span>/<span class="_total-results"></span></div>
-        <button type="button" class="results-buttonPrev _prev-result-button">Prev</button>
-        <button type="button" class="results-buttonNext _next-result-button">Next</button>
-      </div>
-    </form>
-  </div>
-
-  <script type="module" src="popup.js"></script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Sigma Search</title>
+  </head>
+  <body>
+    <main class="popup">
+      <form id="search-form" class="search-form">
+        <div class="row">
+          <input
+            type="text"
+            id="search-query"
+            class="input"
+            placeholder="Find text on this page…"
+            disabled
+            aria-label="Search query"
+            maxlength="1000"
+            spellcheck="false"
+          />
+          <button type="button" id="clear-button" class="button" disabled>Clear</button>
+        </div>
+        <div class="row options">
+          <label><input id="match-case" type="checkbox" />Match case</label>
+          <label><input id="whole-words" type="checkbox" />Whole words</label>
+          <label title="Use a regular expression instead of plain text"
+            ><input id="use-regex" type="checkbox" />Regex</label
+          >
+        </div>
+        <div id="results" class="row" aria-label="Search results">
+          <span role="status" aria-live="polite" aria-atomic="true"
+            ><span id="result-index">0</span> / <span id="result-count">0</span> matches</span
+          >
+          <button
+            type="button"
+            id="previous-button"
+            class="button"
+            aria-label="Previous match"
+            disabled
+          >
+            Previous
+          </button>
+          <button type="button" id="next-button" class="button" aria-label="Next match" disabled>
+            Next
+          </button>
+        </div>
+        <div id="search-status" class="status" role="status" aria-live="polite">
+          Opening search…
+        </div>
+        <p id="search-warning" class="warning" role="status" hidden></p>
+        <p class="hint">Enter: next match · Shift+Enter: previous · Esc: close</p>
+        <details>
+          <summary>Help &amp; shortcuts</summary>
+          <p class="hint">
+            This beta searches visible text in the main page. Collapsed sections and image
+            descriptions are not searched yet. Open a section to include its text.
+          </p>
+          <p class="hint">
+            After closing this popup: Alt+Shift+N / Alt+Shift+P move between matches. Alt+Shift+F
+            opens search.
+          </p>
+          <a id="shortcuts-link" href="#">Change keyboard shortcuts</a>
+        </details>
+        <details>
+          <summary>History &amp; privacy</summary>
+          <p class="hint">
+            Search runs locally. Drafts last for this browser session. History is off by default,
+            stays on this device when enabled, and is never saved in private windows.
+          </p>
+          <label><input id="history-enabled" type="checkbox" />Save search history</label>
+          <div id="history-row" class="row" hidden>
+            <select id="history-select" class="input" aria-label="Previous searches"></select>
+          </div>
+          <button type="button" id="clear-history-button" class="button" disabled>
+            Delete saved history
+          </button>
+        </details>
+      </form>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
 </html>

@@ -1,0 +1,31 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - uses: browser-actions/setup-chrome@v2
+        id: chrome
+        with:
+          chrome-version: stable
+      - name: DOM and installed-extension regressions
+        run: npm run test:browser
+        env:
+          # Hosted Linux runners can restrict Chromium user namespaces.
+          CHROME_NO_SANDBOX: '1'
+          CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}

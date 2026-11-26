@@ -1,16 +1,25 @@
 {
-  "name": "app",
-  "version": "1.0.0",
-  "description": "## Purpose",
-  "main": "index.js",
+  "name": "sigma-search",
+  "version": "0.1.0",
+  "description": "Everyday find-in-page with case and whole-word controls",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check": "npm run format:check && npm run lint && npm test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings 0",
+    "test": "node --test tests/unit/*.test.js",
+    "test:browser": "node tests/run-browser.cjs",
+    "package": "python3 scripts/package.py"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.39.0",
-    "eslint": "^9.39.0",
-    "globals": "^16.5.0"
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "globals": "17.14.0",
+    "prettier": "3.10.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=24"
   }
 }

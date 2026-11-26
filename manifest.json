@@ -1,11 +1,10 @@
 {
   "name": "Sigma Search",
-  "description": "Sigma Search Pre-alpha",
-  "homepage_url": "https://github.com/llagerlof/fresh-chrome-extension",
-  "version": "0.0.1",
+  "description": "Find text on web pages with control over case, whole words and keyboard navigation. Optional regular expressions.",
+  "version": "0.1.0",
   "manifest_version": 3,
   "action": {
-    "default_title": "Fresh Chrome Extension boilerplate 3.1.0",
+    "default_title": "Sigma Search",
     "default_popup": "src/popup/popup.html",
     "default_icon": {
       "16": "assets/icons/icon16.png",
@@ -20,37 +19,37 @@
     "64": "assets/icons/icon64.png",
     "128": "assets/icons/icon128.png"
   },
-  "content_scripts": [
-    {
-      "run_at" : "document_start",
-      "js": ["src/content/before.js"],
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ]
-    },
-    {
-      "run_at" : "document_idle",
-      "js": ["src/content/after.js"],
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ]
-    }
-  ],
   "web_accessible_resources": [
     {
-      "resources": ["src/content/search.mjs"],
-      "matches": ["https://*/*","http://*/*"]
+      "resources": ["src/content/*.js", "src/shared/*.js"],
+      "matches": ["https://*/*", "http://*/*"]
     }
   ],
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "storage"
-  ],
-  "host_permissions": [
-    "https://*/*",
-    "http://*/*"
-  ]
+  "permissions": ["activeTab", "scripting", "storage", "offscreen"],
+  "minimum_chrome_version": "116",
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Open Sigma Search"
+    },
+    "next-result": {
+      "suggested_key": {
+        "default": "Alt+Shift+N"
+      },
+      "description": "Next search result"
+    },
+    "previous-result": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Previous search result"
+    }
+  },
+  "version_name": "0.1.0 beta"
 }
